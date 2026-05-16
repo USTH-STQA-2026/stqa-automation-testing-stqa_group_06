@@ -17,17 +17,17 @@ Sử dụng **Playwright + Python** để kiểm thử hệ thống Mượn sác
 
 |              | Thông tin                    |
 | ------------ | ---------------------------- |
-| **Tên nhóm** | `<!-- VD: Nhóm 1 -->`        |
-| **Lớp**      | `<!-- VD: SE001.P11 -->`     |
-| **Học kỳ**   | `<!-- VD: HK2 2025-2026 -->` |
+| **Tên nhóm** |  STQA_Group_6                |
+| **Lớp**      |  252ICT2012.L1               |
+| **Học kỳ**   |  HK2 2025-2026               |
 
 | #   | MSSV | Họ và tên | Vai trò     |
 | --- | ---- | --------- | ----------- |
-| 1   |      |           | Nhóm trưởng |
-| 2   |      |           | Thành viên  |
-| 3   |      |           | Thành viên  |
-| 4   |      |           | Thành viên  |
-
+| 1   | 23BA14307 | Nguyễn Đức Anh Tuấn | Nhóm trưởng |
+| 2   | 23BA14299 | Nguyễn Khắc Trường  | Thành viên  |
+| 3   | 23BA14304 | Nguyễn Mạnh Tú      | Thành viên  |
+| 4   | 22BA13294 | Nguyễn Đình Thi     | Thành viên  |
+| 5   | 23BA14243 | Nguyễn Minh Quang   | Thành viên  |
 ---
 
 ## 📖 Trước khi bắt đầu — Bối cảnh / Before You Start — Context
