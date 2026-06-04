@@ -55,21 +55,16 @@ def test_borrow_book(page, test_config):
     enable_flutter_semantics(page)
     
     # 5. Click "Mượn" button (confirm button in dialog) (*Click nút "Mượn" — nút xác nhận trong dialog*)
-    confirm_btn = page.locator(
-        'flt-semantics[role="dialog"] flt-semantics[role="button"]:has-text("Mượn")'
-    ).first
-    if not confirm_btn.is_visible():
-        confirm_btn = page.locator('flt-semantics[role="button"]').filter(has_text="Mượn").last
-
-    confirm_btn.wait_for(state="visible")
-    confirm_btn.click()
+    flutter_click_button(page, "Mượn")
     
     # 6. Assert: "Đang mượn" or "thành công" appears (*Assert: "Đang mượn" hoặc "thành công" xuất hiện*)
-    page.wait_for_timeout(1500)
+    page.wait_for_timeout(2000)
+    enable_flutter_semantics(page)
+    
     success_indicator = page.locator(
         'flt-semantics[aria-label*="Đang mượn"], flt-semantics[aria-label*="thành công"]'
     ).first
-    success_indicator.wait_for(state="visible", timeout=5000)  
+    success_indicator.wait_for(state="visible", timeout=7000)  # Tăng timeout lên 7s cho môi trường CI gánh tạ
     assert success_indicator.is_visible()
 
 def test_view_borrowed_books(page, test_config):
@@ -126,9 +121,18 @@ def test_return_book(page, test_config):
     # 4. Click and verify status change or success message
     return_btn.click()
 
-    page.wait_for_timeout(1500)
+    page.wait_for_timeout(2000)
+    enable_flutter_semantics(page)
     success_msg = page.locator('flt-semantics[aria-label*="thành công"]').first
     returned_status = page.locator('flt-semantics[aria-label*="Có sẵn"]').first
+
+    try:
+        success_msg.wait_for(state="visible", timeout=5000)
+    except:
+        try:
+            returned_status.wait_for(state="visible", timeout=5000)
+        except:
+            pass
 
     assert (
         success_msg.is_visible()
