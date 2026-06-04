@@ -22,6 +22,7 @@ from conftest import (
     login,
     SCREENSHOT_DIR,
 )
+from conftest import wait_for_flutter
 
 def test_borrow_book(page, test_config):
     """TC-08: Borrow an available book (*Mượn sách có trạng thái 'Có sẵn'*)
@@ -61,12 +62,14 @@ def test_borrow_book(page, test_config):
     page.wait_for_timeout(2000)
     enable_flutter_semantics(page)
     
-    success_indicator = page.locator(
-        'flt-semantics[aria-label*="Đang mượn"], flt-semantics[aria-label*="thành công"]'
-    ).first
-    success_indicator.wait_for(state="visible", timeout=7000)  # Tăng timeout lên 7s cho môi trường CI gánh tạ
-    assert success_indicator.is_visible()
+    try:
+        wait_for_flutter(page, text="thành công")
+    except:
+        wait_for_flutter(page, text="Đang mượn")
 
+
+    all_text = " ".join(page.locator("flt-semantics").all_text_contents())
+    assert "thành công" in all_text or "Đang mượn" in all_text
 def test_view_borrowed_books(page, test_config):
     """TC-09: View borrowed books list (*Xem danh sách sách đang mượn — tab Mượn / Trả*)
     🔴 NOT COMPLETED (*CHƯA HOÀN THÀNH*)
@@ -123,18 +126,11 @@ def test_return_book(page, test_config):
 
     page.wait_for_timeout(2000)
     enable_flutter_semantics(page)
-    success_msg = page.locator('flt-semantics[aria-label*="thành công"]').first
-    returned_status = page.locator('flt-semantics[aria-label*="Có sẵn"]').first
-
     try:
-        success_msg.wait_for(state="visible", timeout=5000)
+        wait_for_flutter(page, text="thành công")
     except:
-        try:
-            returned_status.wait_for(state="visible", timeout=5000)
-        except:
-            pass
+        wait_for_flutter(page, text="Có sẵn")
 
-    assert (
-        success_msg.is_visible()
-        or returned_status.is_visible()
-    ), "Trả sách thất bại: không thấy thông báo thành công hoặc trạng thái 'Có sẵn'"
+    # Kiểm tra lại trong text tổng
+    all_text = " ".join(page.locator("flt-semantics").all_text_contents())
+    assert "thành công" in all_text or "Có sẵn" in all_text, "Trả sách thất bại: không tìm thấy trạng thái cập nhật"
