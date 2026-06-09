@@ -20,7 +20,7 @@ import time
 import pytest
 from conftest import (
     enable_flutter_semantics, flutter_fill, flutter_click_button,
-    login, SCREENSHOT_DIR, wait_for_flluter
+    login, SCREENSHOT_DIR, wait_for_flutter
 )
 
 
