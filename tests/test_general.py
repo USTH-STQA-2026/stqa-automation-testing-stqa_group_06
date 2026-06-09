@@ -38,16 +38,14 @@ def test_logout(page, test_config):
            (*Assert: có nút "Đăng nhập" hoặc ô input Email*)
     """
     login(page, test_config)
-    enable_flutter_semantics(page)
 
     flutter_click_button(page, "Đăng xuất")
+    
     wait_for_flutter(page, text="Đăng nhập")
     enable_flutter_semantics(page)
 
-    sem_text="".join(page.locator("flt-semantics").all_text_contents())
-
     assert(
-        page.locator('flt-semantics[role="button"]:has-text("Đăn nhập")').count() >0
+        page.locator('flt-semantics[role="button"]:has-text("Đăng nhập")').count() >0
         or page.locator('input[aria-label="Email"]').count() > 0
     )
     page.screenshot(path=f"{test_config['screenshot_dir']}/11th_test_case.png")
@@ -71,7 +69,8 @@ def test_switch_language_to_english(page, test_config):
     flutter_click_button(page, "EN")
 
     wait_for_flutter(page, text="Borrow")
-
+    enable_flutter_semantics(page)
+    
     sem_text="".join(page.locator("flt-semantics").all_text_contents())
 
     assert(
