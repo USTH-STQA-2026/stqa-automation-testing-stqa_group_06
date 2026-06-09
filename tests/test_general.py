@@ -70,7 +70,7 @@ def test_switch_language_to_english(page, test_config):
 
     flutter_click_button(page, "EN")
 
-    enable_flutter_semantics(page)
+    wait_for_flutter(page, text="Borrow")
 
     sem_text="".join(page.locator("flt-semantics").all_text_contents())
 
