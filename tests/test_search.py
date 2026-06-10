@@ -84,4 +84,3 @@ def test_search_by_author(page, test_config):
     
     # 3. Verify that there are books containing the author name "Nguyễn Minh Đức" in their aria-label attribute
     assert page.locator('flt-semantics[aria-label*="Nguyễn Minh Đức"]').count() > 0
-    """
