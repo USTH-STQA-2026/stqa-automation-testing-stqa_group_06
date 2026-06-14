@@ -72,7 +72,7 @@ def test_login_fail_wrong_password(page, test_config):
 def test_login_fail(page, test_config, email, password, tc_id):
     # [R] Reachability
     page.goto(test_config["base_url"], wait_until="domcontentloaded", timeout=60000)
-     page.wait_for_timeout(5000)
+    page.wait_for_timeout(5000)
 
     try:
         enable_flutter_semantics(page)
