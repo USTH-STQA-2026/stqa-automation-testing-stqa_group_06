@@ -3,18 +3,13 @@ Login Tests (*Kiểm thử Đăng nhập*) — Library Book Borrowing System (*H
 """
 import os
 import pytest
-from conftest import enable_flutter_semantics, flutter_fill, flutter_click_button, wait_for_flutter, SCREENSHOT_DIR
-
-
-def test_login_success(page, test_config):
-    # [R] Reachability: Navigate to login page — reach the UI under test     
-    page.goto(test_config["base_url"], wait_until="domcontentloaded", timeout=60000)
-    page.wait_for_timeout(5000)
-
-    try:
-        enable_flutter_semantics(page)
-    except Exception:
-        page.wait_for_timeout(10000)
+from conftest import enable_flutter_semantics, flutter_fill, flutter_click_button, wait_for_flutter, SCREENSHOT_DIR 
+ 
+ 
+def test_login_success(page, test_config): 
+    # [R] Reachability: Navigate to login page — reach the UI under test      
+    page.goto(test_config["base_url"], wait_until="networkidle", timeout=60000)
+    enable_flutter_semantics(page)
 
     # [I] Infection: Enter valid credentials — trigger login logic in the system
     flutter_fill(page, "Email", test_config["email"])
@@ -37,13 +32,8 @@ def test_login_success(page, test_config):
 
 def test_login_fail_wrong_password(page, test_config):
     # [R] page.goto(...) → Navigate to login page
-    page.goto(test_config["base_url"], wait_until="domcontentloaded", timeout=60000)
-    page.wait_for_timeout(5000)
-
-    try:
-        enable_flutter_semantics(page)
-    except Exception:
-        page.wait_for_timeout(10000)
+    page.goto(test_config["base_url"], wait_until="networkidle", timeout=60000)
+    enable_flutter_semantics(page)
 
     # [I] Infection: Enter correct email but wrong password — trigger error state
     flutter_fill(page, "Email", test_config["email"])
@@ -71,13 +61,8 @@ def test_login_fail_wrong_password(page, test_config):
 ])
 def test_login_fail(page, test_config, email, password, tc_id):
     # [R] Reachability
-    page.goto(test_config["base_url"], wait_until="domcontentloaded", timeout=60000)
-    page.wait_for_timeout(5000)
-
-    try:
-        enable_flutter_semantics(page)
-    except Exception:
-        page.wait_for_timeout(10000)
+    page.goto(test_config["base_url"], wait_until="networkidle", timeout=60000)
+    enable_flutter_semantics(page)
 
     # [I] Infection: Fill fields only if values are provided — skip if None or empty
     resolved_email = test_config["email"] if email is None else email
@@ -108,13 +93,8 @@ def test_login_fail(page, test_config, email, password, tc_id):
 
 def test_login_fail_empty_fields(page, test_config):
     # [R] Reachability: Navigate to login page
-    page.goto(test_config["base_url"], wait_until="domcontentloaded", timeout=60000)
-    page.wait_for_timeout(5000)
-
-    try:
-        enable_flutter_semantics(page)
-    except Exception:
-        page.wait_for_timeout(10000)
+    page.goto(test_config["base_url"], wait_until="networkidle", timeout=60000)
+    enable_flutter_semantics(page)
 
     # [I] Infection: Skip all fields — click Login immediately
     flutter_click_button(page, "Đăng nhập")
