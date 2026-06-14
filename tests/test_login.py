@@ -7,7 +7,8 @@ from conftest import enable_flutter_semantics, flutter_fill, flutter_click_butto
 
 
 def test_login_success(page, test_config):
-    # [R] Reachability: Navigate to login page — reach the UI under test     page.goto(test_config["base_url"], wait_until="networkidle", timeout=60000)
+    # [R] Reachability: Navigate to login page — reach the UI under test     
+    page.goto(test_config["base_url"], wait_until="networkidle", timeout=60000)
     enable_flutter_semantics(page)
 
     # [I] Infection: Enter valid credentials — trigger login logic in the system
