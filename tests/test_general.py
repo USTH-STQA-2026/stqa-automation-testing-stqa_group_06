@@ -20,15 +20,12 @@ import time
 import pytest
 from conftest import (
     enable_flutter_semantics, flutter_fill, flutter_click_button,
-    login, SCREENSHOT_DIR,
+    login, SCREENSHOT_DIR, wait_for_flutter
 )
 
 
 def test_logout(page, test_config):
     """TC-11: Logout success (*Đăng xuất thành công*)
-
-    🔴 NOT COMPLETED (*CHƯA HOÀN THÀNH*)
-
     Description (*Mô tả*):
         Log in → click Logout → verify page returns to login screen.
         (*Đăng nhập → click Đăng xuất → kiểm tra quay về trang đăng nhập.*)
@@ -40,14 +37,21 @@ def test_logout(page, test_config):
         4. Assert: "Đăng nhập" button or Email input exists
            (*Assert: có nút "Đăng nhập" hoặc ô input Email*)
     """
-    # TODO: Students implement here (Sinh viên viết code ở đây)
-    pytest.skip("Not implemented — student must complete (Chưa hoàn thành)")
+    login(page, test_config)
 
+    flutter_click_button(page, "Đăng xuất")
+    
+    wait_for_flutter(page, text="Đăng nhập")
+    enable_flutter_semantics(page)
 
+    assert(
+        page.locator('flt-semantics[role="button"]:has-text("Đăng nhập")').count() >0
+        or page.locator('input[aria-label="Email"]').count() > 0
+    )
+    page.screenshot(path=f"{test_config['screenshot_dir']}/11th_test_case.png")
+    
 def test_switch_language_to_english(page, test_config):
     """TC-12: Switch language to English (*Chuyển ngôn ngữ sang tiếng Anh*)
-
-    🔴 NOT COMPLETED (*CHƯA HOÀN THÀNH*)
 
     Description (*Mô tả*):
         Log in → click "EN" button → verify UI switches to English.
@@ -60,5 +64,18 @@ def test_switch_language_to_english(page, test_config):
         4. Get sem_text = " ".join(page.locator("flt-semantics").all_text_contents())
         5. Assert: "Logout" or "Borrow" or "Library" in sem_text
     """
-    # TODO: Students implement here (Sinh viên viết code ở đây)
-    pytest.skip("Not implemented — student must complete (Chưa hoàn thành)")
+    login(page, test_config)
+
+    flutter_click_button(page, "EN")
+
+    wait_for_flutter(page, text="Borrow")
+    enable_flutter_semantics(page)
+    
+    sem_text="".join(page.locator("flt-semantics").all_text_contents())
+
+    assert(
+        "Logout" in sem_text
+        or "Borrow" in sem_text
+        or "Library" in sem_text
+    )
+    page.screenshot(path=f"{test_config['screenshot_dir']}/12th_test_case.png")
