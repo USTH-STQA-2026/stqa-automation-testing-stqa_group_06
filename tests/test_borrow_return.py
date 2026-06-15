@@ -134,3 +134,36 @@ def test_return_book(page, test_config):
     # Kiểm tra lại trong text tổng
     all_text = " ".join(page.locator("flt-semantics").all_text_contents())
     assert "thành công" in all_text or "Có sẵn" in all_text, "Trả sách thất bại: không tìm thấy trạng thái cập nhật"
+
+def test_fix_borrow_limit_bug_automated(page, test_config):
+    """TC-12: Automated verify: System MUST BLOCK borrowing a 4th consecutive book (*Tự động kiểm tra: Hệ thống PHẢI CHẶN mượn cuốn thứ 4*)
+    Description (*Mô tả*): Log in → Try to borrow a 4th book when already holding 3 borrowed books
+    → Verify that "borrow success" message is NOT shown (Assertion fails if bug still exists).
+    (*Đăng nhập → Cố gắng mượn cuốn thứ 4 khi đã cầm 3 cuốn → Kiểm tra thông báo mượn thành công KHÔNG hiển thị*).
+    """
+    
+    login(page, test_config)
+    
+    
+    available_book = page.locator('flt-semantics[role="group"][aria-label*="Có sẵn"]').first
+    available_book.wait_for(state="visible")
+    
+    
+    borrow_btn = available_book.locator('flt-semantics[role="button"]:has-text("Mượn sách này")')
+    borrow_btn.click()
+    
+    
+    page.wait_for_timeout(1000)
+    enable_flutter_semantics(page) 
+    flutter_click_button(page, "Mượn")
+    
+    
+    page.wait_for_timeout(2000)
+    enable_flutter_semantics(page) 
+    
+    
+    all_text = " ".join(page.locator("flt-semantics").all_text_contents())
+    
+    # --- AUTO ---
+    assert "thành công" not in all_text, "Lỗi nghiệp vụ (BUG-02): Hệ thống vẫn cho phép mượn cuốn sách thứ 4 thành công!"
+    print("Xác nhận tự động: Hệ thống đã chặn mượn cuốn sách thứ 4 thành công.")
