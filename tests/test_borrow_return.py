@@ -124,7 +124,7 @@ def _test_borrow_limit_core(page, test_config):
     enable_flutter_semantics(page)
     flutter_click_button(page, "Mượn")
 
-  
+    # ✅ Chờ Flutter render xong TRƯỚC khi gọi enable_flutter_semantics
     page.wait_for_timeout(3000)
     try:
         wait_for_flutter(page, text="thành công")
