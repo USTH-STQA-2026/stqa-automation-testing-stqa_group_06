@@ -9,13 +9,10 @@ from conftest import (
     wait_for_flutter,
 )
 
-# ✏️ ĐIỀN VÀO ĐÂY
-MY_EMAIL    = "ba.nguyen@email.com"   
-MY_PASSWORD = "password123"   
-BASE_URL    = "https://stqa.rbc.vn"
+BASE_URL = "https://stqa.rbc.vn"
 
 
-def my_login(page):
+def my_login(page, email, password):
     page.goto(BASE_URL, wait_until="networkidle", timeout=60000)
     enable_flutter_semantics(page)
 
@@ -25,22 +22,22 @@ def my_login(page):
     active = page.locator("flt-text-editing-host input, flt-text-editing-host textarea")
     try:
         active.first.wait_for(state="attached", timeout=3000)
-        active.first.fill(MY_EMAIL)
+        active.first.fill(email)
     except Exception:
-        email_field.fill(MY_EMAIL)
+        email_field.fill(email)
 
     pw_field = page.locator('input[aria-label="Mật khẩu"]').first
     pw_field.wait_for(state="attached", timeout=10000)
     pw_field.click()
     try:
         active.first.wait_for(state="attached", timeout=3000)
-        active.first.fill(MY_PASSWORD)
+        active.first.fill(password)
     except Exception:
-        pw_field.fill(MY_PASSWORD)
+        pw_field.fill(password)
 
     page.locator('flt-semantics[role="button"]:has-text("Đăng nhập")').click()
 
-    for text in ["Đăng xuất", "Trang chủ", "Thư viện", "Mượn sách này", "Có sẵn", "Sách"]:
+    for text in ["Đăng xuất", "Mượn sách này", "Có sẵn", "Thư viện", "Sách"]:
         try:
             page.locator(
                 f'flt-semantics:has-text("{text}"), flt-semantics[aria-label*="{text}"]'
@@ -62,7 +59,8 @@ def _find_borrow_tab(page):
 
 
 def test_borrow_book(page, test_config):
-    my_login(page)
+    # Tài khoản chưa mượn sách nào — phù hợp nhất để test mượn
+    my_login(page, "dam.tran@email.com", "password123")
 
     borrow_btn = page.locator(
         'flt-semantics[role="button"]:has-text("Mượn sách này")'
@@ -84,7 +82,8 @@ def test_borrow_book(page, test_config):
 
 
 def test_view_borrowed_books(page, test_config):
-    my_login(page)
+    # Tài khoản đang mượn BOOK003 — có dữ liệu để xem
+    my_login(page, "ba.nguyen@email.com", "password123")
 
     tab = _find_borrow_tab(page)
     tab.wait_for(state="visible", timeout=30000)
@@ -100,7 +99,8 @@ def test_view_borrowed_books(page, test_config):
 
 
 def test_return_book(page, test_config):
-    my_login(page)
+    # Tài khoản đang mượn BOOK003 — có sách để trả
+    my_login(page, "ba.nguyen@email.com", "password123")
 
     tab = _find_borrow_tab(page)
     tab.wait_for(state="visible", timeout=30000)
@@ -122,7 +122,8 @@ def test_return_book(page, test_config):
 
 
 def test_fix_borrow_limit_bug_automated(page, test_config):
-    my_login(page)
+    # Tài khoản phù hợp test giới hạn mượn
+    my_login(page, "biet.hoang@email.com", "password123")
 
     borrow_btn = page.locator(
         'flt-semantics[role="button"]:has-text("Mượn sách này")'
