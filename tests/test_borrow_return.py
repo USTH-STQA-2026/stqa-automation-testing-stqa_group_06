@@ -212,3 +212,57 @@ def test_fix_borrow_limit_bug_automated(page, test_config):
         f"TC-11 FAILED: {sem_text[:300]}"
     )
     print("Xác nhận tự động: Hệ thống đã chặn mượn cuốn sách thứ 4 thành công.")
+def test_borrow_with_suspended_member(page, test_config):
+    my_login(page, "suspended.user@email.com", "password123")
+
+    borrow_btn = page.locator(
+        'flt-semantics[role="button"]:has-text("Mượn sách này")'
+    ).first
+    borrow_btn.wait_for(state="visible", timeout=30000)
+    borrow_btn.click()
+
+    page.wait_for_timeout(1000)
+    enable_flutter_semantics(page)
+    flutter_click_button(page, "Mượn")
+    page.wait_for_timeout(2000)
+    enable_flutter_semantics(page)
+
+    screenshot = os.path.join(SCREENSHOT_DIR, "TC12_borrow_suspended_member.png")
+    page.screenshot(path=screenshot)
+    open_image(screenshot)
+
+    sem_text = get_semantics_text(page)
+    assert "đình chỉ" in sem_text.lower() or "khóa" in sem_text.lower(), (
+        f"TC-12 FAILED: {sem_text[:300]}"
+    )
+    assert "thành công" not in sem_text.lower(), (
+        f"TC-12 FAILED: {sem_text[:300]}"
+    )
+
+
+def test_borrow_with_expired_member(page, test_config):
+    my_login(page, "expired.user@email.com", "password123")
+
+    borrow_btn = page.locator(
+        'flt-semantics[role="button"]:has-text("Mượn sách này")'
+    ).first
+    borrow_btn.wait_for(state="visible", timeout=30000)
+    borrow_btn.click()
+
+    page.wait_for_timeout(1000)
+    enable_flutter_semantics(page)
+    flutter_click_button(page, "Mượn")
+    page.wait_for_timeout(2000)
+    enable_flutter_semantics(page)
+
+    screenshot = os.path.join(SCREENSHOT_DIR, "TC13_borrow_expired_member.png")
+    page.screenshot(path=screenshot)
+    open_image(screenshot)
+
+    sem_text = get_semantics_text(page)
+    assert "hết hạn" in sem_text.lower() or "gia hạn" in sem_text.lower(), (
+        f"TC-13 FAILED: {sem_text[:300]}"
+    )
+    assert "thành công" not in sem_text.lower(), (
+        f"TC-13 FAILED: {sem_text[:300]}"
+    )
