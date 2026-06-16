@@ -13,13 +13,13 @@
 
 ### Test Automation Strategy
 
-**Test Runner**  Pytest discovers and executes test functions. 
-</br>**Browser Automation**  Playwright controls the Chromium browser during test execution. 
-</br>**UI Interaction** Flutter Accessibility Semantics Tree is used to interact with input fields, buttons, tabs, and records. 
-</br>**Test Isolation** Each test is executed using a fresh browser context to ensure independence and avoid side effects. 
-</br>**Test Data**  Seed data and configurable test accounts are managed through the `.env` configuration file. 
-</br>**Assertions**  Tests verify visible text, ARIA labels, statuses, records, and access behavior against expected results. 
-</br>**Evidence**  Screenshots are captured automatically after test execution to support result verification and defect reporting. 
+**- Test Runner :**  Pytest discovers and executes test functions. 
+</br>**- Browser Automation :**  Playwright controls the Chromium browser during test execution. 
+</br>**- UI Interaction :** Flutter Accessibility Semantics Tree is used to interact with input fields, buttons, tabs, and records. 
+</br>**- Test Isolation :** Each test is executed using a fresh browser context to ensure independence and avoid side effects. 
+</br>**- Test Data :**  Seed data and configurable test accounts are managed through the `.env` configuration file. 
+</br>**- Assertions :**  Tests verify visible text, ARIA labels, statuses, records, and access behavior against expected results. 
+</br>**- Evidence :**  Screenshots are captured automatically after test execution to support result verification and defect reporting. 
 
 
 ## 2. Test Cases and Execution Status
