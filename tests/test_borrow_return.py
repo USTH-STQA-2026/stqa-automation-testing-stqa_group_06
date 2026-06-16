@@ -130,8 +130,10 @@ def test_borrow_limit_enforced(page, test_config):
     _confirm_borrow_btn(page).wait_for(state="attached", timeout=5_000)
     flutter_click_button(page, "Mượn")
     page.wait_for_timeout(POST_BORROW_MS)
-   except Exception as e:
-    print(f"[WARN] Không thấy text 'giới hạn': {e}")
+    try:
+        wait_for_flutter(page, text="giới hạn")
+    except Exception:
+        pass
     enable_flutter_semantics(page)
     page.screenshot(path=os.path.join(SCREENSHOT_DIR, "TC_borrow_limit.png"))
     error_toast = _borrow_limit_error(page)
