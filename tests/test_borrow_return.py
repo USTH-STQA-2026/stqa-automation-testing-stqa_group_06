@@ -8,10 +8,11 @@ from conftest import (
     wait_for_flutter,
 )
 
-MAX_BORROW_LIMIT   = 3
-MAX_RETURN_SAFETY  = 20
-API_SETTLE_MS      = 2_000
-POST_BORROW_MS     = 3_000
+MAX_BORROW_LIMIT  = 3
+MAX_RETURN_SAFETY = 20
+API_SETTLE_MS     = 2_000
+POST_BORROW_MS    = 3_000
+
 
 def _tab(page, label: str):
     return page.locator(f'flt-semantics[role="tab"][aria-label="{label}"]')
@@ -46,6 +47,7 @@ def _borrow_limit_error(page):
         'flt-semantics[aria-label*="tối đa"],'
         'flt-semantics[aria-label*="vượt quá"]'
     ).first
+
 
 def _go_home(page):
     tab = _tab(page, "Trang chủ")
@@ -86,6 +88,7 @@ def _borrow_one_book(page):
     except Exception:
         wait_for_flutter(page, text="Đang mượn")
     enable_flutter_semantics(page)
+
 
 def test_borrow_book(page, test_config):
     login(page, test_config)
@@ -132,8 +135,8 @@ def test_borrow_limit_enforced(page, test_config):
     page.wait_for_timeout(POST_BORROW_MS)
     try:
         wait_for_flutter(page, text="giới hạn")
-    except Exception:
-        pass
+    except Exception as e:
+        print(f"[WARN] Không thấy text 'giới hạn': {e}")
     enable_flutter_semantics(page)
     page.screenshot(path=os.path.join(SCREENSHOT_DIR, "TC_borrow_limit.png"))
     error_toast = _borrow_limit_error(page)
