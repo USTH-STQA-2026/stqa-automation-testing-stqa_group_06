@@ -96,6 +96,7 @@ def navigate_to_muon_tra(page):
 
 
 def test_borrow_book(page, test_config):
+    # Tài khoản 1: dam.tran@email.com
     my_login(page, "dam.tran@email.com", "password123")
 
     borrow_btn = page.locator(
@@ -126,6 +127,7 @@ def test_borrow_book(page, test_config):
 
 
 def test_view_borrowed_books(page, test_config):
+    # Tài khoản 2: ba.nguyen@email.com
     my_login(page, "ba.nguyen@email.com", "password123")
     navigate_to_muon_tra(page)
 
@@ -149,7 +151,8 @@ def test_view_borrowed_books(page, test_config):
 
 
 def test_return_book(page, test_config):
-    my_login(page, "ba.nguyen@email.com", "password123")
+    # Tài khoản 3: biet.hoang@email.com
+    my_login(page, "biet.hoang@email.com", "password123")
     navigate_to_muon_tra(page)
 
     return_btn = page.locator(
