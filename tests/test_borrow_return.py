@@ -11,8 +11,7 @@ from conftest import (
 )
 
 def test_borrow_book(page, test_config):
-    # Kích hoạt Semantics trước khi login để tránh lỗi Timeout "Đăng xuất"
-    enable_flutter_semantics(page)
+    # login() đã tự gọi enable_flutter_semantics() sau khi page.goto()
     login(page, test_config)
     
     available_book = page.locator('flt-semantics[role="group"][aria-label*="Có sẵn"]').first
@@ -32,8 +31,7 @@ def test_borrow_book(page, test_config):
     assert "thành công" in all_text or "Đang mượn" in all_text
 
 def test_view_borrowed_books(page, test_config):
-    # Kích hoạt Semantics trước khi login để tránh lỗi Timeout "Đăng xuất"
-    enable_flutter_semantics(page)
+    # login() đã tự gọi enable_flutter_semantics() sau khi page.goto()
     login(page, test_config)
     
     borrow_return_tab = page.locator('flt-semantics[role="tab"][aria-label="Mượn / Trả"]')
@@ -45,8 +43,7 @@ def test_view_borrowed_books(page, test_config):
     assert borrowed_book_indicator.is_visible()
 
 def test_return_book(page, test_config):
-    # Kích hoạt Semantics trước khi login để tránh lỗi Timeout "Đăng xuất"
-    enable_flutter_semantics(page)
+    # login() đã tự gọi enable_flutter_semantics() sau khi page.goto()
     login(page, test_config)
     
     borrow_return_tab = page.locator('flt-semantics[role="tab"][aria-label="Mượn / Trả"]')
@@ -65,8 +62,7 @@ def test_return_book(page, test_config):
     assert "thành công" in all_text or "Có sẵn" in all_text
 
 def test_fix_borrow_limit_bug_automated(page, test_config):
-    # Kích hoạt Semantics trước khi login để tránh lỗi Timeout "Đăng xuất"
-    enable_flutter_semantics(page)
+    # login() đã tự gọi enable_flutter_semantics() sau khi page.goto()
     login(page, test_config)
     
     available_book = page.locator('flt-semantics[role="group"][aria-label*="Có sẵn"]').first
