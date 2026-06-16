@@ -101,6 +101,7 @@ def test_borrow_book(page, test_config):
         wait_for_flutter(page, text="Đang mượn")
 
     page.screenshot(path=os.path.join(SCREENSHOT_DIR, "TC08_borrow_book.png"))
+    os.startfile(os.path.join(SCREENSHOT_DIR, "TC08_borrow_book.png"))
 
     sem_text = get_semantics_text(page)
     assert "thành công" in sem_text or "Đang mượn" in sem_text, (
@@ -119,6 +120,7 @@ def test_view_borrowed_books(page, test_config):
     borrowed_book_indicator.wait_for(state="visible", timeout=10000)
 
     page.screenshot(path=os.path.join(SCREENSHOT_DIR, "TC09_view_borrowed_books.png"))
+    os.startfile(os.path.join(SCREENSHOT_DIR, "TC09_view_borrowed_books.png"))
 
     sem_text = get_semantics_text(page)
     assert (
@@ -157,6 +159,7 @@ def test_return_book(page, test_config):
         wait_for_flutter(page, text="Có sẵn")
 
     page.screenshot(path=os.path.join(SCREENSHOT_DIR, "TC10_return_book.png"))
+    os.startfile(os.path.join(SCREENSHOT_DIR, "TC10_return_book.png"))
 
     sem_text = get_semantics_text(page)
     assert (
@@ -183,6 +186,7 @@ def test_fix_borrow_limit_bug_automated(page, test_config):
     enable_flutter_semantics(page)
 
     page.screenshot(path=os.path.join(SCREENSHOT_DIR, "TC11_borrow_limit_bug.png"))
+    os.startfile(os.path.join(SCREENSHOT_DIR, "TC11_borrow_limit_bug.png"))
 
     sem_text = get_semantics_text(page)
     assert "thành công" not in sem_text, (
