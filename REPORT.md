@@ -26,36 +26,36 @@
 
 ### Main Test Cases:
 
-| TC-ID | Test Case / Test Scenario | Test Function | Brief Description | Result | REQ | Status | Screenshot |
-|--------|----------------------------|-------------------|---------|----------|-------|-------------|
-| TC-01 | Login with correct Email and Password | tests/test_login.py | Verify that a member can log in using valid credentials | User is redirected to the member dashboard successfully. | REQ-01 | Pass | screenshots/TC-01.png |
-| TC-02 | Login with wrong password | tests/test_login.py | Verify that the system rejects incorrect password | An error message is displayed and login is denied | REQ-01 | Pass | screenshots/TC-02.png |
-| TC-03 | Failed login – both Email-Passworrd left blank | tests/test_login.py | Verify that the system validates required login fields. | The system displays the message "Please enter your email and password" and prevents login. | Pass | REQ-01 | screenshots/TC-03.png |
-| TC-04 | Search books by title – enter "Flutter" | tests/test_search.py | Verify that users can search for books by title. | The search returns the correct book: BOOK001 (Basic Flutter Programming). | REQ-03 | Pass | screenshots/TC-04.png |
-| TC-05 | Search books – enter "xyz_123" | tests/test_search.py | Verify the system behavior when no books match the search keyword. | A "No books found" message is displayed. | REQ-03 | Pass | screenshots/TC-05.png |
-| TC-06 | Filter books by category – enter "Technology" | tests/test_search.py | Verify that users can filter books by category. | Entering "Technology" in the category filter textbox displays only Technology books. | REQ-03 | Pass | screenshots/TC-06.png |
-| TC-07 | Search books by author | tests/test_search.py | Verify that users can search for books by author name. | Searching for author "Nguyễn Minh Đức" displays the correct books written by this author. | REQ-03 | Pass | screenshots/TC-07.png |
-| TC-08 | Borrow a book successfully | tests/test_borrow_return.py | Verify that a member can borrow an available book. | After confirming the borrow action, the selected book status changes to "Borrowed". | REQ-04 | Pass | screenshots/TC-08.png |
-| TC-09 | View borrowed books list | tests/test_borrow_return.py | Verify that members can view their active borrowing records. | The "Borrow / Return" tab correctly displays borrowing record BR001. | REQ-04 | Pass | screenshots/TC-09.png |
-| TC-10 | Return a book successfully | tests/test_borrow_return.py | Verify that a member can return a borrowed book. | After clicking "Return Book", the book status changes back to "Available". | REQ-05 | Pass | screenshots/TC-10.png |
-| TC-11 | Log out successfully | tests/test_general.py | Verify that users can log out of the system. | Clicking the logout icon redirects the user to the login page. |  | Pass | screenshots/TC-11.png |
-| TC-12 | Switch the interface language to English | tests/test_general.py | Verify that users can change the application language. | The interface language is successfully changed from Vietnamese to English, and all supported labels and messages are displayed correctly. |  | Pass | screenshots/TC-12.png |
+| TC-ID | Test Case / Test Scenario | Test Function | Brief Description | Result | REQ | Status | 
+|--------|----------------------------|----------------|-------------------|----------|-----|----------|
+| TC-01 | Login with correct Email and Password | tests/test_login.py | Verify that a member can log in using valid credentials | User is redirected to the member dashboard successfully. | REQ-01 | Pass | 
+| TC-02 | Login with wrong password | tests/test_login.py | Verify that the system rejects incorrect password | An error message is displayed and login is denied | REQ-01 | Pass | 
+| TC-03 | Failed login – both Email and Password left blank | tests/test_login.py | Verify that the system validates required login fields. | The system displays the message "Please enter your email and password" and prevents login. | REQ-01 | Pass | 
+| TC-04 | Search books by title – enter "Flutter" | tests/test_search.py | Verify that users can search for books by title. | The search returns the correct book: BOOK001 (Basic Flutter Programming). | REQ-03 | Pass | <img 
+| TC-05 | Search books – enter "xyz_123" | tests/test_search.py | Verify the system behavior when no books match the search keyword. | A "No books found" message is displayed. | REQ-03 | Pass | 
+| TC-06 | Filter books by category – enter "Technology" | tests/test_search.py | Verify that users can filter books by category. | Entering "Technology" in the category filter textbox displays only Technology books. | REQ-03 | Pass | 
+| TC-07 | Search books by author | tests/test_search.py | Verify that users can search for books by author name. | Searching for author "Nguyễn Minh Đức" displays the correct books written by this author. | REQ-03 | Pass | 
+| TC-08 | Borrow a book successfully | tests/test_borrow_return.py | Verify that a member can borrow an available book. | After confirming the borrow action, the selected book status changes to "Borrowed". | REQ-04 | Pass | 
+| TC-09 | View borrowed books list | tests/test_borrow_return.py | Verify that members can view their active borrowing records. | The "Borrow / Return" tab correctly displays borrowing record BR001. | REQ-04 | Pass | 
+| TC-10 | Return a book successfully | tests/test_borrow_return.py | Verify that a member can return a borrowed book. | After clicking "Return Book", the book status changes back to "Available". | REQ-05 | Pass | 
+| TC-11 | Log out successfully | tests/test_general.py | Verify that users can log out of the system. | Clicking the logout icon redirects the user to the login page. |  | Pass | 
+| TC-12 | Switch the interface language to English | tests/test_general.py | Verify that users can change the application language. | The interface language is successfully changed from Vietnamese to English, and all supported labels and messages are displayed correctly. |  | Pass | 
 
 ### Extended Test Cases:
 
-| TC-ID | Test Case / Test Scenario | Test Function | Brief Description | Result | Requirement | Status | Screenshot |
-|--------|----------------------------|----------------|-------------------|----------|-------------|----------|-------------|
-| TC-13 | Borrow the 4th book | tests/test_borrow_return.py | Verify that a member cannot borrow more than 3 books at the same time. | The system allowed the member to borrow a 4th book even though the borrowing limit had already been reached. | REQ-04 | Fail | screenshots/TC-13.png |
-| TC-14 | Login with correct Email and Password of Librarian | tests/test_add_member.py | Verify that a librarian can log in using valid credentials. | The librarian was successfully authenticated and redirected to the librarian dashboard. | REQ-01 | Pass | screenshots/TC-14.png |
-| TC-15 | Librarian adds a new member with a valid email address | tests/test_add_member.py | Verify that the librarian can create a new member account using a valid email format. | The system failed to create the member account even though a valid email address was provided. | REQ-07 | Fail | screenshots/TC-15.png |
-| TC-16 | Librarian adds a new member with an invalid email address (missing "." in the domain) | tests/test_add_member.py | Verify that the system rejects invalid email formats when creating a new member account. | The system accepted the invalid email address and created the member account successfully. | REQ-07 | Fail | screenshots/TC-16.png |
+| TC-ID | Test Case / Test Scenario | Test Function | Brief Description | Result | REQ | Status | 
+|--------|----------------------------|----------------|-------------------|----------|-----|----------|
+| TC-13 | Login with correct Email and Password of Librarian | tests/test_add_member.py | Verify that a librarian can log in using valid credentials. | The librarian was successfully authenticated and redirected to the librarian dashboard. | REQ-01 | Pass | 
+| TC-14 | Librarian adds a new member with a valid email address | tests/test_add_member.py | Verify that the librarian can create a new member account using a valid email format. | The system failed to create the member account even though a valid email address was provided. | REQ-07 | Fail | 
+| TC-15 | Librarian adds a new member with an invalid email address (missing "." in the domain) | tests/test_add_member.py | Verify that the system rejects invalid email formats when creating a new member account. | The system accepted the invalid email address and created the member account successfully. | REQ-07 | Fail | 
+
 
 ### Data-driven Testing:
 -------------|
-| TC-ID | Test Case / Test Scenario | Brief Description | Result | Status | Screenshot |
-|---------|-----------------------------|-------------------|----------|----------|-------------|
-| B2-Login | Data-driven testing – invalid login attempts | tests/test_login.py | Execute the invalid login scenario using multiple datasets. | Tested with three datasets: (1) empty email and password, (2) invalid email with valid password, and (3) valid email with incorrect password. The system correctly rejected all attempts and displayed the corresponding error messages. | Pass | screenshots/B2-D.png |
-| B2-Search | Data-driven testing – book search | tests/test_search.py |  Execute the book search scenario using multiple keywords. | Tested with the keywords "Flutter", "Python", and "Kiểm thử". The system returned the expected search results for each keyword. | Pass | screenshots/B2-S.png |
+| TC-ID | Test Case / Test Scenario | Test Function | Brief Description | Result | REQ | Status | 
+|--------|----------------------------|----------------|-------------------|----------|-----|----------|
+| B2-Login | Data-driven testing – invalid login attempts | tests/test_login.py | Execute the invalid login scenario using multiple datasets. | Tested with three datasets: (1) empty email and password, (2) invalid email with valid password, and (3) valid email with incorrect password. The system correctly rejected all attempts and displayed the corresponding error messages. | REQ-01 | Pass | 
+| B2-Search | Data-driven testing – book search | tests/test_search.py |  Execute the book search scenario using multiple keywords. | Tested with the keywords "Flutter", "Python", and "Kiểm thử". The system returned the expected search results for each keyword. | REQ-03| Pass | 
 
 
 ### Summary:
@@ -64,37 +64,15 @@
 |---------|--------------------|-------------------|----------|----|
 | tests/test_login.py | 4 | Login success, invalid credentials, and input validation scenarios. | 4 | 0 |
 | tests/test_search.py | 5 | Book searching, filtering by title, author, and category | 5 | 0 |
-| tests/test_borrow_return.py | 4 | Borrowing books, returning books, borrowing limits  | 3 | 1 |
+| tests/test_borrow_return.py | 3 | Borrowing books, returning books  | 3 | 1 |
 | tests/test_general.py | 2 | Logout functionality and language switching. | 2 | 0 |
 | tests/test_bonus.py | 3 | Member management, role-based access control  | 1 | 2 |
-| **Total** | **18** | **Overall automated Web UI test coverage** | **18** | **3** |
+| **Total** | **17** | **Overall automated Web UI test coverage** | **17** | **2** |
 
 
 ## 3. Bug Report
 
 ### BUG-01: 
-
-**Title :** System allows borrowing a fourth book despite the maximum borrowing limit
-
-**Input :**  
-A member who already has **3 active borrowed books** attempts to borrow an additional book (the 4th book).
-
-**Expected :**  
-The system should reject the request and display an appropriate message such as:  
-*"You have reached the maximum borrowing limit of 3 books."*
-
-**Actual :**  
-The borrowing request is processed successfully, and the member is able to borrow the fourth book.
-
-**Severity :**  **High** — Violates a core library policy and may lead to inaccurate inventory control and unfair resource allocation.
-
-**Test :**  `tests/test_borrow_return (TC-13)`
-
-**Solution :**
-- Implement server-side validation to check the number of active borrowing records before creating a new borrowing transaction. If the member already has 3 borrowed books, the system should reject the request and return an appropriate error message. In addition, the UI should disable or hide the Borrow action when the borrowing limit has been reached to improve the user experience.
-
-
-### BUG-02: 
 
 **Title :** System rejects a valid email address when creating a new member
 
@@ -115,7 +93,7 @@ The member creation request is rejected, and an error message is displayed even 
 -  Review and update the server-side email validation rules to comply with standard email specifications (e.g., RFC 5322). Ensure that valid email addresses are accepted consistently by both the frontend and backend. Add automated test cases covering various valid and invalid email formats to prevent regression.
 
 
-### BUG-03:
+### BUG-02:
 
 **Title :** System accepts invalid email addresses when adding a new member
 
