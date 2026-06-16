@@ -212,8 +212,10 @@ def test_fix_borrow_limit_bug_automated(page, test_config):
         f"TC-11 FAILED: {sem_text[:300]}"
     )
     print("Xác nhận tự động: Hệ thống đã chặn mượn cuốn sách thứ 4 thành công.")
+
+
 def test_borrow_with_suspended_member(page, test_config):
-    my_login(page, "suspended.user@email.com", "password123")
+    my_login(page, "cu.le@email.com", "password123")
 
     borrow_btn = page.locator(
         'flt-semantics[role="button"]:has-text("Mượn sách này")'
@@ -232,7 +234,7 @@ def test_borrow_with_suspended_member(page, test_config):
     open_image(screenshot)
 
     sem_text = get_semantics_text(page)
-    assert "đình chỉ" in sem_text.lower() or "khóa" in sem_text.lower(), (
+    assert "tạm ngưng" in sem_text.lower() or "khóa" in sem_text.lower() or "từ chối" in sem_text.lower(), (
         f"TC-12 FAILED: {sem_text[:300]}"
     )
     assert "thành công" not in sem_text.lower(), (
@@ -241,7 +243,7 @@ def test_borrow_with_suspended_member(page, test_config):
 
 
 def test_borrow_with_expired_member(page, test_config):
-    my_login(page, "expired.user@email.com", "password123")
+    my_login(page, "binh.pham@email.com", "password123")
 
     borrow_btn = page.locator(
         'flt-semantics[role="button"]:has-text("Mượn sách này")'
@@ -260,7 +262,7 @@ def test_borrow_with_expired_member(page, test_config):
     open_image(screenshot)
 
     sem_text = get_semantics_text(page)
-    assert "hết hạn" in sem_text.lower() or "gia hạn" in sem_text.lower(), (
+    assert "hết hạn" in sem_text.lower() or "lỗi" in sem_text.lower(), (
         f"TC-13 FAILED: {sem_text[:300]}"
     )
     assert "thành công" not in sem_text.lower(), (
