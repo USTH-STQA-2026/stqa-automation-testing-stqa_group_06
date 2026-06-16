@@ -11,7 +11,7 @@ from conftest import (
 
 # ✏️ ĐIỀN VÀO ĐÂY
 MY_EMAIL    = "ba.nguyen@email.com"
-MY_PASSWORD = ""   # ← mật khẩu của bạn
+MY_PASSWORD = "password123"
 BASE_URL    = "https://stqa.rbc.vn"
 
 
