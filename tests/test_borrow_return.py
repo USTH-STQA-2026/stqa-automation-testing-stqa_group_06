@@ -1,5 +1,6 @@
 import os
 import re
+import sys
 import pytest
 from conftest import (
     enable_flutter_semantics,
@@ -10,6 +11,20 @@ from conftest import (
 )
 
 BASE_URL = "https://stqa.rbc.vn"
+
+
+def open_image(path):
+    try:
+        if sys.platform == "win32":
+            os.startfile(path)
+        elif sys.platform == "darwin":
+            import subprocess
+            subprocess.Popen(["open", path])
+        else:
+            import subprocess
+            subprocess.Popen(["xdg-open", path])
+    except Exception:
+        pass
 
 
 def get_semantics_text(page):
@@ -100,8 +115,9 @@ def test_borrow_book(page, test_config):
     except Exception:
         wait_for_flutter(page, text="Đang mượn")
 
-    page.screenshot(path=os.path.join(SCREENSHOT_DIR, "TC08_borrow_book.png"))
-    os.startfile(os.path.join(SCREENSHOT_DIR, "TC08_borrow_book.png"))
+    screenshot = os.path.join(SCREENSHOT_DIR, "TC08_borrow_book.png")
+    page.screenshot(path=screenshot)
+    open_image(screenshot)
 
     sem_text = get_semantics_text(page)
     assert "thành công" in sem_text or "Đang mượn" in sem_text, (
@@ -119,8 +135,9 @@ def test_view_borrowed_books(page, test_config):
     ).first
     borrowed_book_indicator.wait_for(state="visible", timeout=10000)
 
-    page.screenshot(path=os.path.join(SCREENSHOT_DIR, "TC09_view_borrowed_books.png"))
-    os.startfile(os.path.join(SCREENSHOT_DIR, "TC09_view_borrowed_books.png"))
+    screenshot = os.path.join(SCREENSHOT_DIR, "TC09_view_borrowed_books.png")
+    page.screenshot(path=screenshot)
+    open_image(screenshot)
 
     sem_text = get_semantics_text(page)
     assert (
@@ -158,8 +175,9 @@ def test_return_book(page, test_config):
     except Exception:
         wait_for_flutter(page, text="Có sẵn")
 
-    page.screenshot(path=os.path.join(SCREENSHOT_DIR, "TC10_return_book.png"))
-    os.startfile(os.path.join(SCREENSHOT_DIR, "TC10_return_book.png"))
+    screenshot = os.path.join(SCREENSHOT_DIR, "TC10_return_book.png")
+    page.screenshot(path=screenshot)
+    open_image(screenshot)
 
     sem_text = get_semantics_text(page)
     assert (
@@ -185,8 +203,9 @@ def test_fix_borrow_limit_bug_automated(page, test_config):
     page.wait_for_timeout(2000)
     enable_flutter_semantics(page)
 
-    page.screenshot(path=os.path.join(SCREENSHOT_DIR, "TC11_borrow_limit_bug.png"))
-    os.startfile(os.path.join(SCREENSHOT_DIR, "TC11_borrow_limit_bug.png"))
+    screenshot = os.path.join(SCREENSHOT_DIR, "TC11_borrow_limit_bug.png")
+    page.screenshot(path=screenshot)
+    open_image(screenshot)
 
     sem_text = get_semantics_text(page)
     assert "thành công" not in sem_text, (
