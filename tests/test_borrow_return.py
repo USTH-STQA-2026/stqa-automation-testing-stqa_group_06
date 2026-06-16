@@ -134,4 +134,4 @@ def test_fix_borrow_limit_bug_automated(page, test_config):
     enable_flutter_semantics(page)
     all_text = " ".join(page.locator("flt-semantics").all_text_contents())
     assert "thành công" not in all_text
-    print("Xác nhận tự động: Hệ thống đã chặn mượn cuốn sách thứ 4 thành công.")
+    print("error detected,4 attempt borrow book,block.")
