@@ -122,8 +122,8 @@ def test_return_book(page, test_config):
 
 
 def test_fix_borrow_limit_bug_automated(page, test_config):
-    # Tài khoản phù hợp test giới hạn mượn
-    my_login(page, "biet.hoang@email.com", "password123")
+    # Dùng tài khoản Tạm ngưng (MEM004) — hệ thống phải chặn mượn sách
+    my_login(page, "cu.le@email.com", "password123")
 
     borrow_btn = page.locator(
         'flt-semantics[role="button"]:has-text("Mượn sách này")'
