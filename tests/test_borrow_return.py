@@ -126,7 +126,7 @@ def test_borrow_book(page, test_config):
 
 
 def test_view_borrowed_books(page, test_config):
-    my_login(page, "ba.nguyen@email.com", "password123")
+    my_login(page, "dam.tran@email.com", "password123")
     navigate_to_muon_tra(page)
 
     borrowed_book_indicator = page.locator(
@@ -149,7 +149,7 @@ def test_view_borrowed_books(page, test_config):
 
 
 def test_return_book(page, test_config):
-    my_login(page, "ba.nguyen@email.com", "password123")
+    my_login(page, "dam.tran@email.com", "password123")
     navigate_to_muon_tra(page)
 
     return_btn = page.locator(
@@ -189,7 +189,7 @@ def test_return_book(page, test_config):
 
 
 def test_fix_borrow_limit_bug_automated(page, test_config):
-    my_login(page, "cu.le@email.com", "password123")
+    my_login(page, "dam.tran@email.com", "password123")
 
     borrow_btn = page.locator(
         'flt-semantics[role="button"]:has-text("Mượn sách này")'
