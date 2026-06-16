@@ -59,7 +59,6 @@ def _find_borrow_tab(page):
 
 
 def test_borrow_book(page, test_config):
-    # Tài khoản chưa mượn sách nào — phù hợp nhất để test mượn
     my_login(page, "dam.tran@email.com", "password123")
 
     borrow_btn = page.locator(
@@ -82,7 +81,6 @@ def test_borrow_book(page, test_config):
 
 
 def test_view_borrowed_books(page, test_config):
-    # Tài khoản đang mượn BOOK003 — có dữ liệu để xem
     my_login(page, "ba.nguyen@email.com", "password123")
 
     tab = _find_borrow_tab(page)
@@ -99,7 +97,6 @@ def test_view_borrowed_books(page, test_config):
 
 
 def test_return_book(page, test_config):
-    # Tài khoản đang mượn BOOK003 — có sách để trả
     my_login(page, "ba.nguyen@email.com", "password123")
 
     tab = _find_borrow_tab(page)
@@ -122,7 +119,6 @@ def test_return_book(page, test_config):
 
 
 def test_fix_borrow_limit_bug_automated(page, test_config):
-    # Dùng tài khoản Tạm ngưng (MEM004) — hệ thống phải chặn mượn sách
     my_login(page, "cu.le@email.com", "password123")
 
     borrow_btn = page.locator(
