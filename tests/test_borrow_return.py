@@ -10,7 +10,7 @@ from conftest import (
 )
 
 # ✏️ ĐIỀN VÀO ĐÂY
-MY_EMAIL    = ""   # ← email của bạn
+MY_EMAIL    = "ba.nguyen@email.com"
 MY_PASSWORD = ""   # ← mật khẩu của bạn
 BASE_URL    = "https://stqa.rbc.vn"
 
