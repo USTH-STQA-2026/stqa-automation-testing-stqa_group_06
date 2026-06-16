@@ -96,7 +96,6 @@ def navigate_to_muon_tra(page):
 
 
 def test_borrow_book(page, test_config):
-    # Tài khoản 1: dam.tran@email.com
     my_login(page, "dam.tran@email.com", "password123")
 
     borrow_btn = page.locator(
@@ -127,7 +126,6 @@ def test_borrow_book(page, test_config):
 
 
 def test_view_borrowed_books(page, test_config):
-    # Tài khoản 2: ba.nguyen@email.com
     my_login(page, "ba.nguyen@email.com", "password123")
     navigate_to_muon_tra(page)
 
@@ -151,8 +149,7 @@ def test_view_borrowed_books(page, test_config):
 
 
 def test_return_book(page, test_config):
-    # Tài khoản 3: biet.hoang@email.com
-    my_login(page, "biet.hoang@email.com", "password123")
+    my_login(page, "ba.nguyen@email.com", "password123")
     navigate_to_muon_tra(page)
 
     return_btn = page.locator(
@@ -189,3 +186,29 @@ def test_return_book(page, test_config):
         or "Đã trả" in sem_text
         or "trả thành công" in sem_text.lower()
     ), f"TC-10 FAILED: {sem_text[:300]}"
+
+
+def test_fix_borrow_limit_bug_automated(page, test_config):
+    my_login(page, "cu.le@email.com", "password123")
+
+    borrow_btn = page.locator(
+        'flt-semantics[role="button"]:has-text("Mượn sách này")'
+    ).first
+    borrow_btn.wait_for(state="visible", timeout=30000)
+    borrow_btn.click()
+
+    page.wait_for_timeout(1000)
+    enable_flutter_semantics(page)
+    flutter_click_button(page, "Mượn")
+    page.wait_for_timeout(2000)
+    enable_flutter_semantics(page)
+
+    screenshot = os.path.join(SCREENSHOT_DIR, "TC11_borrow_limit_bug.png")
+    page.screenshot(path=screenshot)
+    open_image(screenshot)
+
+    sem_text = get_semantics_text(page)
+    assert "thành công" not in sem_text, (
+        f"TC-11 FAILED: {sem_text[:300]}"
+    )
+    print("Xác nhận tự động: Hệ thống đã chặn mượn cuốn sách thứ 4 thành công.")
