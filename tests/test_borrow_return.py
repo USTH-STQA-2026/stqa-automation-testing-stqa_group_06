@@ -5,15 +5,57 @@ from conftest import (
     enable_flutter_semantics,
     flutter_fill,
     flutter_click_button,
-    login,
     SCREENSHOT_DIR,
     wait_for_flutter,
 )
 
+# ✏️ ĐIỀN VÀO ĐÂY
+MY_EMAIL    = ""   # ← email của bạn
+MY_PASSWORD = ""   # ← mật khẩu của bạn
+BASE_URL    = "https://stqa.rbc.vn"
+
+
+def my_login(page):
+    page.goto(BASE_URL, wait_until="networkidle", timeout=60000)
+    enable_flutter_semantics(page)
+
+    email_field = page.locator('input[aria-label="Email"]').first
+    email_field.wait_for(state="attached", timeout=15000)
+    email_field.click()
+    active = page.locator("flt-text-editing-host input, flt-text-editing-host textarea")
+    try:
+        active.first.wait_for(state="attached", timeout=3000)
+        active.first.fill(MY_EMAIL)
+    except Exception:
+        email_field.fill(MY_EMAIL)
+
+    pw_field = page.locator('input[aria-label="Mật khẩu"]').first
+    pw_field.wait_for(state="attached", timeout=10000)
+    pw_field.click()
+    try:
+        active.first.wait_for(state="attached", timeout=3000)
+        active.first.fill(MY_PASSWORD)
+    except Exception:
+        pw_field.fill(MY_PASSWORD)
+
+    btn = page.locator('flt-semantics[role="button"]:has-text("Đăng nhập")')
+    btn.click()
+
+    for text in ["Đăng xuất", "Trang chủ", "Thư viện", "Sách", "Mượn"]:
+        try:
+            page.locator(
+                f'flt-semantics:has-text("{text}"), flt-semantics[aria-label*="{text}"]'
+            ).first.wait_for(state="attached", timeout=15000)
+            break
+        except Exception:
+            continue
+
+    enable_flutter_semantics(page)
+
+
 def test_borrow_book(page, test_config):
-    # login() đã tự gọi enable_flutter_semantics() sau khi page.goto()
-    login(page, test_config)
-    
+    my_login(page)
+
     available_book = page.locator('flt-semantics[role="group"][aria-label*="Có sẵn"]').first
     available_book.wait_for(state="visible")
     borrow_btn = available_book.locator('flt-semantics[role="button"]:has-text("Mượn sách này")')
@@ -25,27 +67,29 @@ def test_borrow_book(page, test_config):
     enable_flutter_semantics(page)
     try:
         wait_for_flutter(page, text="thành công")
-    except:
+    except Exception:
         wait_for_flutter(page, text="Đang mượn")
     all_text = " ".join(page.locator("flt-semantics").all_text_contents())
     assert "thành công" in all_text or "Đang mượn" in all_text
 
+
 def test_view_borrowed_books(page, test_config):
-    # login() đã tự gọi enable_flutter_semantics() sau khi page.goto()
-    login(page, test_config)
-    
+    my_login(page)
+
     borrow_return_tab = page.locator('flt-semantics[role="tab"][aria-label="Mượn / Trả"]')
     borrow_return_tab.wait_for(state="visible")
     borrow_return_tab.click()
     page.wait_for_timeout(1000)
-    borrowed_book_indicator = page.locator('flt-semantics[aria-label*="Đang mượn"], flt-semantics[role="button"]:has-text("Trả sách")').first
+    borrowed_book_indicator = page.locator(
+        'flt-semantics[aria-label*="Đang mượn"], flt-semantics[role="button"]:has-text("Trả sách")'
+    ).first
     borrowed_book_indicator.wait_for(state="visible", timeout=5000)
     assert borrowed_book_indicator.is_visible()
 
+
 def test_return_book(page, test_config):
-    # login() đã tự gọi enable_flutter_semantics() sau khi page.goto()
-    login(page, test_config)
-    
+    my_login(page)
+
     borrow_return_tab = page.locator('flt-semantics[role="tab"][aria-label="Mượn / Trả"]')
     borrow_return_tab.wait_for(state="visible")
     borrow_return_tab.click()
@@ -56,24 +100,24 @@ def test_return_book(page, test_config):
     enable_flutter_semantics(page)
     try:
         wait_for_flutter(page, text="thành công")
-    except:
+    except Exception:
         wait_for_flutter(page, text="Có sẵn")
     all_text = " ".join(page.locator("flt-semantics").all_text_contents())
     assert "thành công" in all_text or "Có sẵn" in all_text
 
+
 def test_fix_borrow_limit_bug_automated(page, test_config):
-    # login() đã tự gọi enable_flutter_semantics() sau khi page.goto()
-    login(page, test_config)
-    
+    my_login(page)
+
     available_book = page.locator('flt-semantics[role="group"][aria-label*="Có sẵn"]').first
     available_book.wait_for(state="visible")
     borrow_btn = available_book.locator('flt-semantics[role="button"]:has-text("Mượn sách này")')
     borrow_btn.click()
     page.wait_for_timeout(1000)
-    enable_flutter_semantics(page) 
+    enable_flutter_semantics(page)
     flutter_click_button(page, "Mượn")
     page.wait_for_timeout(2000)
-    enable_flutter_semantics(page) 
+    enable_flutter_semantics(page)
     all_text = " ".join(page.locator("flt-semantics").all_text_contents())
     assert "thành công" not in all_text
     print("Xác nhận tự động: Hệ thống đã chặn mượn cuốn sách thứ 4 thành công.")
