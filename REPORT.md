@@ -43,13 +43,12 @@
 
 ### Extended Test Cases:
 
-| TC-ID | Test Case / Test Scenario | Test Function | Brief Description | Result | Status | Screenshot |
-|--------|----------------------------|-------------------|---------|----------|-------------|
+| TC-ID | Test Case / Test Scenario | Test Function | Brief Description | Result | Requirement | Status | Screenshot |
+|--------|----------------------------|----------------|-------------------|----------|-------------|----------|-------------|
 | TC-13 | Borrow the 4th book | tests/test_borrow_return.py | Verify that a member cannot borrow more than 3 books at the same time. | The system allowed the member to borrow a 4th book even though the borrowing limit had already been reached. | REQ-04 | Fail | screenshots/TC-13.png |
 | TC-14 | Login with correct Email and Password of Librarian | tests/test_add_member.py | Verify that a librarian can log in using valid credentials. | The librarian was successfully authenticated and redirected to the librarian dashboard. | REQ-01 | Pass | screenshots/TC-14.png |
 | TC-15 | Librarian adds a new member with a valid email address | tests/test_add_member.py | Verify that the librarian can create a new member account using a valid email format. | The system failed to create the member account even though a valid email address was provided. | REQ-07 | Fail | screenshots/TC-15.png |
 | TC-16 | Librarian adds a new member with an invalid email address (missing "." in the domain) | tests/test_add_member.py | Verify that the system rejects invalid email formats when creating a new member account. | The system accepted the invalid email address and created the member account successfully. | REQ-07 | Fail | screenshots/TC-16.png |
-
 
 ### Data-driven Testing:
 -------------|
