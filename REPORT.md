@@ -44,10 +44,12 @@
 ### Extended Test Cases:
 
 | TC-ID | Test Case / Test Scenario | Test Function | Brief Description | Result | REQ | Status | 
-|--------|----------------------------|----------------|-------------------|----------|-----|----------|
-| TC-13 | Login with correct Email and Password of Librarian | tests/test_add_member.py | Verify that a librarian can log in using valid credentials. | The librarian was successfully authenticated and redirected to the librarian dashboard. | REQ-01 | Pass | 
-| TC-14 | Librarian adds a new member with a valid email address | tests/test_add_member.py | Verify that the librarian can create a new member account using a valid email format. | The system failed to create the member account even though a valid email address was provided. | REQ-07 | Fail | 
-| TC-15 | Librarian adds a new member with an invalid email address (missing "." in the domain) | tests/test_add_member.py | Verify that the system rejects invalid email formats when creating a new member account. | The system accepted the invalid email address and created the member account successfully. | REQ-07 | Fail | 
+|--------|----------------------------|----------------|-------------------|----------|-----|----------|  
+| TC-13 | Borrow Book with Suspended Member |`test_borrow_with_suspended_member` | Verify that a suspended member cannot borrow an available book. | The system rejects the borrowing request and displays a message indicating that the member account is suspended. | REQ-04 | Pass |
+| TC-14 | Borrow Book with Expired Member | `test_borrow_with_expired_member` | Verify that a member with an expired membership cannot borrow a book. | The system denies the borrowing request and displays a notification that the membership has expired. | REQ-04 | Pass |
+| TC-15 | Login with correct Email and Password of Librarian | tests/test_add_member.py | Verify that a librarian can log in using valid credentials. | The librarian was successfully authenticated and redirected to the librarian dashboard. | REQ-01 | Pass | 
+| TC-16 | Librarian adds a new member with a valid email address | tests/test_add_member.py | Verify that the librarian can create a new member account using a valid email format. | The system failed to create the member account even though a valid email address was provided. | REQ-07 | Fail | 
+| TC-17 | Librarian adds a new member with an invalid email address (missing "." in the domain) | tests/test_add_member.py | Verify that the system rejects invalid email formats when creating a new member account. | The system accepted the invalid email address and created the member account successfully. | REQ-07 | Fail | 
 
 
 ### Data-driven Testing:
@@ -64,15 +66,33 @@
 |---------|--------------------|-------------------|----------|----|
 | tests/test_login.py | 4 | Login success, invalid credentials, and input validation scenarios. | 4 | 0 |
 | tests/test_search.py | 5 | Book searching, filtering by title, author, and category | 5 | 0 |
-| tests/test_borrow_return.py | 3 | Borrowing books, returning books  | 3 | 1 |
+| tests/test_borrow_return.py | 5 | Borrowing books, returning books  | 3 | 1 |
 | tests/test_general.py | 2 | Logout functionality and language switching. | 2 | 0 |
 | tests/test_bonus.py | 3 | Member management, role-based access control  | 1 | 2 |
-| **Total** | **17** | **Overall automated Web UI test coverage** | **17** | **2** |
+| **Total** | **19** | **Overall automated Web UI test coverage** | **19** | **3** |
 
 
 ## 3. Bug Report
 
-### BUG-01: 
+### BUG-01:
+
+**Title:** System displays an incorrect error message when a suspended member attempts to borrow a book
+
+**Input:**
+Log in using a member account with the status **"Suspended"** and attempt to borrow an available book.
+
+**Expected:**
+The system should reject the borrowing request and display a message indicating that the member account is **suspended**.
+
+**Actual:**
+The borrowing request is rejected, but the system incorrectly displays a message stating that the member's membership has **expired** instead of indicating that the account is suspended.
+
+**Severity:** **Medium** — The borrowing restriction is enforced correctly, but the incorrect error message may confuse users and lead to misunderstanding about the actual status of their accounts.
+
+**Test:** `tests/test_borrow_return.py (TC-11)`
+
+
+### BUG-02: 
 
 **Title :** System rejects a valid email address when creating a new member
 
@@ -93,7 +113,7 @@ The member creation request is rejected, and an error message is displayed even 
 -  Review and update the server-side email validation rules to comply with standard email specifications (e.g., RFC 5322). Ensure that valid email addresses are accepted consistently by both the frontend and backend. Add automated test cases covering various valid and invalid email formats to prevent regression.
 
 
-### BUG-02:
+### BUG-03:
 
 **Title :** System accepts invalid email addresses when adding a new member
 
@@ -124,6 +144,7 @@ The member is created successfully even though the email address is missing the 
 
 ## 5. AI Usage Declaration 
 - ChatGPT and Claude
+
 
 
 
