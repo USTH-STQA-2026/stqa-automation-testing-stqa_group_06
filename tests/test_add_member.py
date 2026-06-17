@@ -52,13 +52,16 @@ def test_add_member_valid(page, test_config):
     login_as_library(page, test_config)
     navigate_to_add_member_tab(page)
 
-    flutter_fill(page, "Email", "newmember@gmail.com") 
-    flutter_fill(page, "Mật khẩu", "password123")
+    flutter_fill(page, "Họ tên", "Nguyễn Văn Test")
+    flutter_fill(page, "Email", "newmember@gmail.com")
+    flutter_fill(page, "Số điện thoại", "0901234567")
     flutter_click_button(page, "Thêm thành viên")
+
     wait_for_flutter(page)
     page.wait_for_timeout(1500)
     enable_flutter_semantics(page)
     page.screenshot(path=os.path.join(SCREENSHOT_DIR, "TCL02_add_member_valid.png"))
+
     sem_text = " ".join(page.locator("flt-semantics").all_text_contents())
     success_keywords = ["thành công", "success", "đã thêm", "thêm thành viên"]
     assert any(kw in sem_text.lower() for kw in success_keywords), (
@@ -69,13 +72,19 @@ def test_add_member_valid(page, test_config):
 
 def test_add_member_invalid_email(page, test_config):
     login_as_library(page, test_config)
-    flutter_fill(page, "Email",     "invalid_email_format")
-    flutter_fill(page, "Mật khẩu", "Password123")
+    navigate_to_add_member_tab(page)
+
+    flutter_fill(page, "Họ tên", "Nguyễn Văn Test")
+    flutter_fill(page, "Email", "newmember_123")
+    flutter_fill(page, "Số điện thoại", "0901234567")
     flutter_click_button(page, "Thêm thành viên")
+
+
     wait_for_flutter(page)
     page.wait_for_timeout(1500)
     enable_flutter_semantics(page)
     page.screenshot(path=os.path.join(SCREENSHOT_DIR, "TCL03_add_member_invalid_email.png"))
+
     sem_text = " ".join(page.locator("flt-semantics").all_text_contents())
     error_keywords = ["không hợp lệ", "invalid", "sai", "định dạng", "format"]
     has_error   = any(kw in sem_text.lower() for kw in error_keywords)
@@ -87,20 +96,25 @@ def test_add_member_invalid_email(page, test_config):
     print("\n✅ TC-L03 PASSED: Từ chối email sai định dạng")
 
 
-@pytest.mark.xfail(                                          # ✅ thêm xfail
+@pytest.mark.xfail(                                          
     strict=True,
     reason="BUG-001: Server chấp nhận email thiếu dấu chấm trong domain "
            "(newmem@emailcom). Chờ dev fix validation.",
 )
 def test_add_member_with_email_missing_dot_in_domain(page, test_config):
     login_as_library(page, test_config)
-    flutter_fill(page, "Email",     "newmem@emailcom")
-    flutter_fill(page, "Mật khẩu", "password123")
+    navigate_to_add_member_tab(page)
+
+    flutter_fill(page, "Họ tên", "Nguyễn Văn Test")
+    flutter_fill(page, "Email", "invalid_email_format")
+    flutter_fill(page, "Số điện thoại", "0901234567")
     flutter_click_button(page, "Thêm thành viên")
+
     wait_for_flutter(page)
     page.wait_for_timeout(1500)
     enable_flutter_semantics(page)
-    page.screenshot(path=os.path.join(SCREENSHOT_DIR, "TCL04_missing_dot_domain.png"))  # ✅ tên riêng
+    page.screenshot(path=os.path.join(SCREENSHOT_DIR, "TCL04_missing_dot_domain.png"))
+
     sem_text = " ".join(page.locator("flt-semantics").all_text_contents())
     error_keywords = ["không hợp lệ", "invalid", "sai", "định dạng", "format"]
     has_error   = any(kw in sem_text.lower() for kw in error_keywords)
