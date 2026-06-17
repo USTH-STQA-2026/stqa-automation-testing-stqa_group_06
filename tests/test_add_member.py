@@ -52,7 +52,7 @@ def test_add_member_valid(page, test_config):
     login_as_library(page, test_config)
     navigate_to_add_member_tab(page)
 
-    flutter_fill(page, "Họ tên", "Nguyễn Văn Test")
+    flutter_fill(page, "Họ và tên", "Nguyễn Văn Test")
     flutter_fill(page, "Email", "newmember@gmail.com")
     flutter_fill(page, "Số điện thoại", "0901234567")
     flutter_click_button(page, "Thêm thành viên")
@@ -74,7 +74,7 @@ def test_add_member_invalid_email(page, test_config):
     login_as_library(page, test_config)
     navigate_to_add_member_tab(page)
 
-    flutter_fill(page, "Họ tên", "Nguyễn Văn Test")
+    flutter_fill(page, "Họ và tên", "Trần Văn Test")
     flutter_fill(page, "Email", "newmember_123")
     flutter_fill(page, "Số điện thoại", "0901234567")
     flutter_click_button(page, "Thêm thành viên")
@@ -105,8 +105,8 @@ def test_add_member_with_email_missing_dot_in_domain(page, test_config):
     login_as_library(page, test_config)
     navigate_to_add_member_tab(page)
 
-    flutter_fill(page, "Họ tên", "Nguyễn Văn Test")
-    flutter_fill(page, "Email", "invalid_email_format")
+    flutter_fill(page, "Họ và tên", "Nguyễn Văn Test")
+    flutter_fill(page, "Email", "nưewmem@emailcom")
     flutter_fill(page, "Số điện thoại", "0901234567")
     flutter_click_button(page, "Thêm thành viên")
 
