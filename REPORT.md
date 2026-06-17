@@ -4,7 +4,10 @@
 - **System Under Test:** ABC Library Book Borrowing Management System (https://stqa.rbc.vn)
 - **Testing Tools:** Python 3.11.9, Playwright, pytest, pytest-playwright
 - **Browser :** Chromium (executed with the `--force-renderer-accessibility` argument to support interaction with the Flutter Web Semantics Tree)
-- **GitHub link :** [ https://github.com/USTH-STQA-2026/stqa-automation-testing-stqa_group_06 ]
+  
+- **GitHub link for Manual :**  https://github.com/USTH-STQA-2026/stqa-manual-testing-stqa_group_06
+  
+- **GitHub link for Automation :**  https://github.com/USTH-STQA-2026/stqa-automation-testing-stqa_group_06 
 
 ### Test Account Configuration
 
