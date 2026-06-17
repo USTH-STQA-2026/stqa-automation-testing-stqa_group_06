@@ -96,11 +96,7 @@ def test_add_member_invalid_email(page, test_config):
     print("\n✅ TC-L03 PASSED: Từ chối email sai định dạng")
 
 
-@pytest.mark.xfail(                                          
-    strict=True,
-    reason="BUG-001: Server chấp nhận email thiếu dấu chấm trong domain "
-           "(newmem@emailcom). Chờ dev fix validation.",
-)
+
 def test_add_member_with_email_missing_dot_in_domain(page, test_config):
     login_as_library(page, test_config)
     navigate_to_add_member_tab(page)
